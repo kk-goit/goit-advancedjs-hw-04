@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>goit Advanced JavaScript HomeWork #3 : Searching photos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400..600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="content" >
+      <div class="search" >
+        <form class="search-form" id="search-form" autocomplete="off">
+          <input type="text" name="queryStr" placeholder="Search images..." >
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      <ul class="gallery visually-hidden"></ul>
+      <div class="load_more" >
+        <button class="visually-hidden" type="button" >Load more</button>
+        <span class="visually-hidden">Loading images, please wait...</span>
+      </div>
+    </div>
+
+    <script src="./main.js" type="module"></script>
+  </body>
+</html>

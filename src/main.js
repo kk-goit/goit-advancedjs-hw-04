@@ -29,9 +29,8 @@ const theLoader = document.querySelector('.load_more span');
 const theGallery = document.querySelector('.gallery');
 
 var curPage = 1;
-var totalPages = 1;
+
 const loadMore = document.querySelector(".load_more button");
-const nothingMore = document.querySelector(".load_more span");
 const nothingMoreMsg = "We're sorry, but you've reached the end of search results.";
 
 document.getElementById("search-form").addEventListener("submit", e => {
@@ -54,14 +53,16 @@ document.getElementById("search-form").addEventListener("submit", e => {
                 iziToast.error({ message: "Sorry, there are no images matching your search query. Please try again!" });
             } else { 
                 curPage = 1;
-                totalPages = data.totalPages;
 
                 theGallery.innerHTML = createGallery(data.hits);
                 theGallery.classList.remove("visually-hidden");
                 sLightBox.refresh();
 
-                if (!renderPaginator({loadButton: loadMore, nothingMore: nothingMore, curPage: curPage, totalPages: totalPages}))
-                    iziToast.info({message: nothingMoreMsg});
+                renderPaginator({
+                    loadButton: loadMore,
+                    curPage: curPage, totalPages: data.totalPages,
+                    iziToast: iziToast, msg: nothingMoreMsg
+                });
             }
         })
         .catch(err => {
@@ -81,16 +82,18 @@ loadMore.addEventListener("click", e => {
     nextPage()
         .then(data => {
             curPage += 1;
-            totalPages = data.totalPages;
 
-            theGallery.innerHTML += createGallery(data.hits);
+            theGallery.insertAdjacentHTML("beforeend", createGallery(data.hits));
             sLightBox.refresh();
 
             const liRect = theGallery.querySelector("li:last-child").getBoundingClientRect();
             window.scrollBy(0, liRect.height*2);
 
-            if (!renderPaginator({loadButton: loadMore, nothingMore: nothingMore, curPage: curPage, totalPages: totalPages}))
-                iziToast.info({message: nothingMoreMsg});
+            renderPaginator({
+                loadButton: loadMore,
+                curPage: curPage, totalPages: data.totalPages,
+                iziToast: iziToast, msg: nothingMoreMsg
+            });
         })
         .catch(err => { 
             iziToast.error({message: err.message});
